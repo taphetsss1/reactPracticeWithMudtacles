@@ -1,4 +1,4 @@
-const initialState = {success : "", error : {},message:"ClickMe",token:""}
+const initialState = {success : "", error : {},message:"ClickMe",token:"",status:false}
 const  Reducer = (state = initialState ,action) =>
 {
   switch (action.type) {
@@ -35,7 +35,15 @@ const  Reducer = (state = initialState ,action) =>
               };
               break;
             }
-  }
+    case "STATUS":{
+          state = {
+            ...state,
+            status : action.status
+          };
+          break;
+        }
+    }
+  
 return state;
 };
 export default Reducer;

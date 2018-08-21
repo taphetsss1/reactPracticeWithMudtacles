@@ -36,3 +36,10 @@ export function addToken(token)
     token : token
   };
 }
+export function checkStatus(stat)
+{
+  return {
+    type : "STATUS",
+    status : stat
+  };
+}

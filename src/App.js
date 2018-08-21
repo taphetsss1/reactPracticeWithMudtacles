@@ -9,8 +9,6 @@ import Routes from './router';
 class App extends Component {
   async componentDidMount ()
   {
- 
-    
     //logout();
    // login();
    // getUser(this.props.token);

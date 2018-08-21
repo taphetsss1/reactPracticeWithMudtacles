@@ -6,7 +6,7 @@ export default class ClassName extends Component{
   {
     return(
     <div>
-      <button type="button" className="btn btn-outline-secondary">{this.props.name}</button>
+      <button onClick={this.props.login} type="button" className="btn btn-outline-secondary">{this.props.name}</button>
     </div>
   );
   }
