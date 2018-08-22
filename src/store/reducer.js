@@ -1,4 +1,4 @@
-const initialState = {success : "", error : {},message:"ClickMe",token:"",status:false}
+const initialState = {success : "", error : {},message:"ClickMe",id:"",status:false,chats:[]}
 const  Reducer = (state = initialState ,action) =>
 {
   switch (action.type) {
@@ -10,7 +10,8 @@ const  Reducer = (state = initialState ,action) =>
     case "SUCCESS":{
         state = {
           ...state,
-          success : action.userdata,
+          success : action.userdata.displayName,
+          id : action.userdata.uid
         };
         break;
       }
@@ -28,13 +29,6 @@ const  Reducer = (state = initialState ,action) =>
               };
               break;
             }
-    case "TOKEN":{
-              state = {
-                ...state,
-              token : action.token
-              };
-              break;
-            }
     case "STATUS":{
           state = {
             ...state,
@@ -42,8 +36,17 @@ const  Reducer = (state = initialState ,action) =>
           };
           break;
         }
+    case "ADDMESSAGE":{
+      state = {
+        ...state,
+        // chats : [...state.chats,action.chats]
+        chats: {
+          ...state.chats,
+          ...action.chats
+        }
+      };
     }
-  
+    }
 return state;
 };
 export default Reducer;

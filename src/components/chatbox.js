@@ -1,142 +1,87 @@
 import React, { Component } from 'react';
 import store from '../store/store';
 import {clickMe} from '../action/action';
-export default class ClassName extends Component{
+import ChatMe from './ChatMe';
+import ChatOthers from './ChatOthers';
+import {connect} from 'react-redux';
+import {ref} from '../action/facebookLogIn'
+import axios from 'axios';
+import Home from './home';
+ class Chatbox extends Component{
+   constructor(props)
+   {
+     super(props);
+     this.send.bind(this);
+     this.state = {
+      
+      refreshMessage : false
+     };
+     this.messageValue = ""
+   }
+   send(data)
+   {
+      axios.post("https://chatwithseniorhigh-9438c.firebaseio.com/Message.json",{id:this.props.id,user:this.props.user,message: this.messageValue})
+      .catch(err =>{
+        console.log(err);
+      })
+      console.log("sending");
+   }
+   setMessage(e)
+   {
+     this.messageValue = e.target.value;
+   }
+   
   render()
   {
+
+    const { chats } = this.props;
+
     return(
     <div>
-
-
-      <button type="button" className="btn btn-outline-secondary">{this.props.name}</button>
-    </div>
-  <div class="container text-center">
-	<div class="row">
-		<h2>Open in chat (popup-box chat-popup)</h2>
-        <h4>Click Here</h4>
-        <div class="round hollow text-center">
-        <a href="#" id="addClass"><span class="glyphicon glyphicon-comment"></span> Open in chat </a>
-        </div>
-        
-        <hr>
-        
-        MORE :
-        <a target="_blank" href="http://bootsnipp.com/snippets/33ejn">Whatsapp Chat Box POPUP</a>,
-         <a target="_blank" href="http://bootsnipp.com/snippets/z4P39"> Creative User Profile  </a>
-         
-	</div>
-</div>
-
-
-<div class="popup-box chat-popup" id="qnimate">
-    		  <div class="popup-head">
-				<div class="popup-head-left pull-left"><img src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" alt="iamgurdeeposahan"> Gurdeep Osahan</div>
-					  <div class="popup-head-right pull-right">
-						<div class="btn-group">
-    								  <button class="chat-header-button" data-toggle="dropdown" type="button" aria-expanded="false">
-									   <i class="glyphicon glyphicon-cog"></i> </button>
-									  <ul role="menu" class="dropdown-menu pull-right">
-										<li><a href="#">Media</a></li>
-										<li><a href="#">Block</a></li>
-										<li><a href="#">Clear Chat</a></li>
-										<li><a href="#">Email Chat</a></li>
-									  </ul>
-						</div>
-						
-						<button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button"><i class="glyphicon glyphicon-off"></i></button>
-                      </div>
-			  </div>
-			<div class="popup-messages">
-    		
-			
-			
-			
-			<div class="direct-chat-messages">
-                    
-					
-					<div class="chat-box-single-line">
-								<abbr class="timestamp">October 8th, 2015</abbr>
-					</div>
-					
-					
-					
-                    <div class="direct-chat-msg doted-border">
-                      <div class="direct-chat-info clearfix">
-                        <span class="direct-chat-name pull-left">Osahan</span>
-                      </div>
-                    
-                      <img alt="message user image" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img -->
-                      <div class="direct-chat-text">
-                        Hey bro, how’s everything going ?
-                      </div>
-					  <div class="direct-chat-info clearfix">
-                        <span class="direct-chat-timestamp pull-right">3.36 PM</span>
-                      </div>
-						<div class="direct-chat-info clearfix">
-						<span class="direct-chat-img-reply-small pull-left">
-							
-						</span>
-						<span class="direct-chat-reply-name">Singh</span>
-						</div>
-                    
+      <Home/>
+       <div className="container">
+        <div className="row pad-top pad-bottom">
+            <div className=" col-lg-6 col-md-6 col-sm-6">
+                <div classNameName="chat-box-div">
+                    <div className="chat-box-head">
+                        GROUP CHAT HISTORY
                     </div>
-                    					
-					
-					<div class="chat-box-single-line">
-						<abbr class="timestamp">October 9th, 2015</abbr>
-					</div>
-			
-					
-					
-					
-                    <div class="direct-chat-msg doted-border">
-                      <div class="direct-chat-info clearfix">
-                        <span class="direct-chat-name pull-left">Osahan</span>
-                      </div>
-                      
-                      <img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img"><!-- /.direct-chat-img -->
-                      <div class="direct-chat-text">
-                        Hey bro, how’s everything going ?
-                      </div>
-					  <div class="direct-chat-info clearfix">
-                        <span class="direct-chat-timestamp pull-right">3.36 PM</span>
-                      </div>
-						<div class="direct-chat-info clearfix">
-						  <img alt="iamgurdeeposahan" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img big-round">
-						<span class="direct-chat-reply-name">Singh</span>
-						</div>
-                     
+                    <div className="panel-body chat-box-main">
+                    <ChatMe message ="s" sender ="n"/>
+                    { 
+                      Object.keys(chats).map(key => {
+                        let e = chats[key];
+                        
+                      (e.id == this.props.id) ? <ChatMe message={e.message} sender={e.user} />
+                       : <ChatOthers message={e.message} sender={e.sender}/> 
+                      })
+      
+                    }
                     </div>
-                
-					
-					
-                    
-
-                    
-
-                  </div>
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			</div>
-			<div class="popup-messages-footer">
-			<textarea id="status_message" placeholder="Type a message..." rows="10" cols="40" name="message"></textarea>
-			<div class="btn-footer">
-			<button class="bg_none"><i class="glyphicon glyphicon-film"></i> </button>
-			<button class="bg_none"><i class="glyphicon glyphicon-camera"></i> </button>
-            <button class="bg_none"><i class="glyphicon glyphicon-paperclip"></i> </button>
-			<button class="bg_none pull-right"><i class="glyphicon glyphicon-thumbs-up"></i> </button>
-			</div>
-			</div>
-	  </div>
+                    <div className="chat-box-footer">
+                        <div className="input-group">
+                            <input type="text"  onChange={this.setMessage.bind(this)} className="form-control" placeholder="Enter Text Here..."id="C"></input>
+                            <span className="input-group-btn">
+                                <button  className="btn btn-info" onClick={this.send.bind(this)} type="button">SEND</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+                </div>
+            </div>
+  );
   }
-);
 }
-  }
+const mapStateToProps = (state) => {
   
+  console.log("map",state.chats);
+  return {
+   chats : state.chats,
+   user : state.success,
+   id : state.id
+  };
+};
+
+export default connect(mapStateToProps,null) (Chatbox);

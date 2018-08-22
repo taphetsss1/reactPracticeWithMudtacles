@@ -9,7 +9,7 @@ export function onSuccess(state)
 {
   return {
     type : "SUCCESS",
-    userdata : state
+    userdata : state,
   };
 
 }
@@ -29,6 +29,13 @@ export function clickMe(message)
   };
 }
 
+export function addMessage(message)
+{
+  return {
+    type : "ADDMESSAGE",
+    chats : message
+  };
+}
 export function addToken(token)
 {
   return {

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import store from '../store/store';
 import {clickMe} from '../action/action';
-export default class ClassName extends Component{
+export default class Button extends Component
+{
   render()
   {
     return(

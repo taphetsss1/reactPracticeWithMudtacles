@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Button from './button';
-import { login,logout,CheckLogin } from '../action/login';
+import { login,logout,CheckLogin,aM } from '../action/login';
+import { addMessage } from '../action/action';
+import {Link} from 'react-router-dom';
 class Home extends Component {
 
   componentDidMount(){
@@ -15,6 +17,7 @@ class Home extends Component {
   logout(){
     logout();
   }
+ 
   render() {
     return (
     <div>
@@ -29,7 +32,7 @@ class Home extends Component {
         <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="#">Explore</a>
+        <Link className="nav-link" to="/Chat"> Chat </Link>
       </li>
       <li className="nav-item">
         <a className="nav-link" href="#">Pricing</a>
@@ -44,7 +47,7 @@ class Home extends Component {
 </nav>
   <div className="bg"> 
       { (this.props.status) ?  "" : <Button name="Log-in" login={this.loginUser.bind(this)}/> }
-      <Button name="Search me a senior high"/>
+      <Button  name="Search me a senior high"/>
       <Button name="Search me a College"/>
     </div>
     </div>
