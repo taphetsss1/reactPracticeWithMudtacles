@@ -5,6 +5,7 @@ import ChatMe from './ChatMe';
 import ChatOthers from './ChatOthers';
 import {connect} from 'react-redux';
 import {ref} from '../action/facebookLogIn'
+import {loadMessage} from '../action/login'
 import axios from 'axios';
 import Home from './home';
  class Chatbox extends Component{
@@ -18,24 +19,28 @@ import Home from './home';
      };
      this.messageValue = ""
    }
-   send(data)
+   componentDidMount()
    {
+    loadMessage();
+   }
+   send(e)
+   {
+     e.preventDefault();
       axios.post("https://chatwithseniorhigh-9438c.firebaseio.com/Message.json",{id:this.props.id,user:this.props.user,message: this.messageValue})
+      .then(()=>{
+        document.getElementById("LakadMatatag").value = "";
+      })
       .catch(err =>{
         console.log(err);
-      })
-      console.log("sending");
+      })  
    }
    setMessage(e)
    {
      this.messageValue = e.target.value;
    }
-   
   render()
   {
-
     const { chats } = this.props;
-
     return(
     <div>
       <Home/>
@@ -47,24 +52,27 @@ import Home from './home';
                         GROUP CHAT HISTORY
                     </div>
                     <div className="panel-body chat-box-main">
-                    <ChatMe message ="s" sender ="n"/>
-                    { 
+                    {
                       Object.keys(chats).map(key => {
                         let e = chats[key];
                         
-                      (e.id == this.props.id) ? <ChatMe message={e.message} sender={e.user} />
+                     let x = (e.id === this.props.id) ? <ChatMe message={e.message} sender={e.sender}/>
                        : <ChatOthers message={e.message} sender={e.sender}/> 
+                       return x
                       })
+                      }
       
-                    }
+              
                     </div>
                     <div className="chat-box-footer">
+                      <form onSubmit={this.send.bind(this)}>
                         <div className="input-group">
-                            <input type="text"  onChange={this.setMessage.bind(this)} className="form-control" placeholder="Enter Text Here..."id="C"></input>
+                            <input   id="LakadMatatag"onChange={this.setMessage.bind(this)} className="form-control" placeholder="Enter Text Here..."id="C"></input>
                             <span className="input-group-btn">
                                 <button  className="btn btn-info" onClick={this.send.bind(this)} type="button">SEND</button>
                             </span>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>

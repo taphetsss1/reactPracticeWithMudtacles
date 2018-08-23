@@ -178,3 +178,10 @@ color: #fff;
 text-align: center;
 
 }
+.text-info-left {
+    float: left;
+}
+.user-left {
+    margin-left: 80%;
+
+}

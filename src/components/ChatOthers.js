@@ -8,10 +8,10 @@ export default class ChatOther extends Component
     return(
     <div>
        <div className="chat-box-left">
-                           {this.props.message}
+                           {this.props.message} 
                         </div>
                         <div className="chat-box-name-left">
-                            -  {this.props.sender}
+                           
                         </div>
                        
     </div>

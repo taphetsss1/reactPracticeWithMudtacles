@@ -7,15 +7,14 @@ import {Link} from 'react-router-dom';
 class Home extends Component {
 
   componentDidMount(){
-    CheckLogin();
-    console.log(this.status);
+   
   }
   loginUser()
   {
-    login();
+    
   }
   logout(){
-    logout();
+    
   }
  
   render() {
